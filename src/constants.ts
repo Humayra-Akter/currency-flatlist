@@ -20,7 +20,7 @@ export const currencyByRupee: Currency[] = [
   {
     name: 'TAKA',
     value: 1,
-    flag: 'BAN',
+    flag: '🇧🇩 ',
     symbol: 'BDT',
   },
   {
