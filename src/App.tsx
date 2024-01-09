@@ -15,6 +15,7 @@ import {
 import {currencyByRupee} from './constants';
 import CurrencyButton from './components/CurrencyButton';
 import Snackbar from 'react-native-snackbar';
+import TicTaccToe from './TicTaccToe';
 
 const App = (): React.JSX.Element => {
   const [inputValue, setInputValue] = useState('');
@@ -81,6 +82,7 @@ const App = (): React.JSX.Element => {
           />
         </View>
       </View>
+      <TicTaccToe />
     </>
   );
 };
