@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
 
 import Snackbar from 'react-native-snackbar';
@@ -70,9 +70,70 @@ export default function TicTaccToe() {
     }
   };
 
+  const onChangeItem = (itemNumber: number) => {
+    if (gameWinner) {
+      return Snackbar.show({
+        text: gameWinner,
+        backgroundColor: '#000000',
+        textColor: '#FFFFFF',
+      });
+    }
+
+    if (gameState[itemNumber] === 'empty') {
+      gameState[itemNumber] = isCross ? 'cross' : 'circle';
+      setIsCross(!isCross);
+    } else {
+      return Snackbar.show({
+        text: 'Position is already filled',
+        backgroundColor: 'red',
+        textColor: '#FFFFFF',
+      });
+    }
+
+    checkIsWinner();
+  };
+
   return (
     <View>
       <Text>TicTaccToe</Text>
+      <View>
+        {gameWinner ? (
+          <View style={[styles.playerInfo, styles.winnerInfo]}>
+            <Text style={styles.winnerTxt}>{gameWinner}</Text>
+          </View>
+        ) : (
+          <View
+            style={[
+              styles.playerInfo,
+              isCross ? styles.playerX : styles.playerO,
+            ]}>
+            <Text style={styles.gameTurnTxt}>
+              Player {isCross ? 'X' : 'Y'}'s turn it is
+            </Text>
+          </View>
+        )}
+      </View>
+      {/* Game Grid */}
+      <FlatList
+        numColumns={3}
+        data={gameState}
+        style={styles.grid}
+        renderItem={({item, index}) => (
+          <Pressable
+            key={index}
+            style={styles.card}
+            onPress={() => onChangeItem(index)}>
+            <Icons name={item} />
+          </Pressable>
+        )}
+      />
+
+      {/* Game Action  */}
+      <Pressable style={styles.gameBtn} onPress={reloadGame}>
+        <Text style={styles.gameBtnText}>
+          {gameWinner ? 'Start new Game' : 'Reload the Game'}
+        </Text>
+      </Pressable>
     </View>
   );
 }
