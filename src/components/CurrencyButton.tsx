@@ -22,12 +22,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   flag: {
-    fontSize: 28,
+    fontSize: 20,
     color: '#000000',
     marginBottom: 4,
   },
   country: {
-    fontSize: 28,
+    fontSize: 20,
     color: '#2D3436',
     marginBottom: 4,
   },

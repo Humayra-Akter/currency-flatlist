@@ -8,7 +8,6 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  useColorScheme,
   View,
 } from 'react-native';
 
@@ -47,24 +46,25 @@ const App = (): React.JSX.Element => {
   };
 
   return (
-    <>
-      <StatusBar />
-      <View style={styles.container}>
-        <View style={styles.topContainer}>
-          <View style={styles.rupeesContainer}>
-            <Text style={styles.rupee}>Tk</Text>
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="dark-content" />
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        {/* Currency Converter */}
+        <View style={styles.currencyContainer}>
+          <Text style={styles.title}>Currency Converter</Text>
+          <View style={styles.inputContainer}>
+            <Text style={styles.currencyLabel}>৳</Text>
             <TextInput
               maxLength={10}
               value={inputValue}
-              clearButtonMode="always" ///only for ios
+              clearButtonMode="always"
               onChangeText={setInputValue}
               keyboardType="number-pad"
               placeholder="Enter amount in Taka"
+              style={styles.input}
             />
           </View>
-          {resultValue && <Text style={styles.resultTxt}>{resultValue}</Text>}
-        </View>
-        <View style={styles.bottomContainer}>
+          {resultValue && <Text style={styles.resultText}>{resultValue}</Text>}
           <FlatList
             numColumns={3}
             data={currencyByRupee}
@@ -72,8 +72,8 @@ const App = (): React.JSX.Element => {
             renderItem={({item}) => (
               <Pressable
                 style={[
-                  styles.button,
-                  targetCurrency === item.name && styles.selected,
+                  styles.currencyButton,
+                  targetCurrency === item.name && styles.selectedButton,
                 ]}
                 onPress={() => btnPressed(item)}>
                 <CurrencyButton {...item} />
@@ -81,74 +81,98 @@ const App = (): React.JSX.Element => {
             )}
           />
         </View>
-      </View>
-      <TicTaccToe />
-    </>
+
+        {/* Tic-Tac-Toe */}
+        <View style={styles.gameContainer}>
+          <Text style={styles.title}>Tic-Tac-Toe</Text>
+          <TicTaccToe />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#515151',
+    backgroundColor: '#f0f0f0',
   },
-  topContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
+  scrollContainer: {
+    paddingVertical: 16,
+    paddingHorizontal: 12,
   },
-  resultTxt: {
-    fontSize: 32,
-    color: '#000000',
-    backgroundColor: '#ffeaa7',
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
+    textAlign: 'center',
+    marginBottom: 16,
+  },
+  currencyContainer: {
+    backgroundColor: '#ffffff',
     borderRadius: 12,
-    padding: 10,
-    fontWeight: '800',
+    padding: 16,
+    marginBottom: 24,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
-  rupee: {
-    marginRight: 8,
-
-    fontSize: 22,
-    color: '#000000',
-    fontWeight: '800',
-  },
-  rupeesContainer: {
+  inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    padding: 10,
+    backgroundColor: '#f9f9f9',
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 16,
   },
-  inputAmountField: {
-    height: 80,
-    width: 200,
-    padding: 8,
-    borderWidth: 1,
-    borderRadius: 4,
-    backgroundColor: '#515151',
+  currencyLabel: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginRight: 8,
+    color: '#666',
   },
-  bottomContainer: {
-    flex: 3,
-  },
-  button: {
+  input: {
     flex: 1,
-
-    margin: 12,
-    height: 160,
-
-    borderRadius: 12,
-    backgroundColor: '#fff',
-    elevation: 2,
-    shadowOffset: {
-      width: 1,
-      height: 1,
-    },
-    shadowColor: '#333',
-    shadowOpacity: 0.1,
-    shadowRadius: 1,
+    fontSize: 18,
+    color: '#333',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
   },
-  selected: {
+  resultText: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#38CC77',
+    textAlign: 'center',
+    marginVertical: 12,
+  },
+  currencyButton: {
+    flex: 1,
+    margin: 6,
+    padding: 16,
+    borderRadius: 8,
+    backgroundColor: '#ffffff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+  },
+  selectedButton: {
     backgroundColor: '#ffeaa7',
+  },
+  gameContainer: {
+    backgroundColor: '#ffffff',
+    borderRadius: 12,
+    padding: 16,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
 });
 
